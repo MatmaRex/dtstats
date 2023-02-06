@@ -5,6 +5,10 @@ set key below offset 0,-0.5
 set ylabel "Edits"
 set xlabel "Month" offset 0,1
 
+set timefmt "%Y%m"
+set xdata time
+set xrange [ "202001": ]
+set lmargin 11 # consistent width of vertical axis labels
 
 set xtics rotate by 90 right
 
@@ -32,8 +36,8 @@ set style textbox opaque noborder
 stackedlines(col) = sum [i=2:col] valid(i) ? column(i) : 0
 percent(col) = ceil( 100.0 * column(col) / stackedlines(8) )
 plot \
-	for [col=2:8] INPUT using 0:(stackedlines(col)):(stackedlines(col-1)):xtic(1) title columnheader(col)[0:15] with filledcurves, \
-	for [col=2:8] INPUT every 6 using ( 6*column(0)-1 ):( stackedlines(col)/2 + stackedlines(col-1)/2 ):( sprintf("%d%%", percent(col)) ) with labels notitle boxed
+	for [col=2:8] INPUT using 1:(stackedlines(col)):(stackedlines(col-1)):xtic(1) title columnheader(col)[0:15] with filledcurves, \
+	for [col=2:8] INPUT using 1:( stackedlines(col)/2 + stackedlines(col-1)/2 ):( floor(tm_mon(timecolumn(1))) % 6 != 3 ? "" : sprintf("%d%%", percent(col)) ) with labels notitle boxed
 
 
 ###############
