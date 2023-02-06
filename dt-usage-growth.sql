@@ -92,6 +92,8 @@ select
 	ctd_name,
 	count(*)
 from interesting_revisions_with_interesting_tags
+-- Omit incomplete values in current month
+where date_format(rev_timestamp, '%Y%m') != date_format(current_date(), '%Y%m')
 group by 1, 2
 -- Preferred order: 'discussiontools', 'mobile edit', 'wikieditor', NULL, then everything else
 order by month, case
