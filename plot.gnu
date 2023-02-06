@@ -28,7 +28,8 @@ set datafile missing
 # in reverse order, fill the area below current column
 #plot for [col=8:2:-1] INPUT using 0:(column(col)>0 ? (sum [i=2:col] column(i)) : ""):xtic(1) title columnheader(col) with filledcurves x1
 # fill the area between stacked lines for current column and previous column
-plot for [col=2:8] INPUT using 0:(sum [i=2:col] valid(i)?column(i):0):(sum [i=2:col-1] valid(i)?column(i):0):xtic(1) title columnheader(col)[0:15] with filledcurves
+set style textbox opaque noborder
+plot for [col=2:8] INPUT using 0:(sum [i=2:col] valid(i)?column(i):0):(sum [i=2:col-1] valid(i)?column(i):0):xtic(1) title columnheader(col)[0:15] with filledcurves, for [col=2:8] INPUT every 6 using ( 6*column(0)-1 ):( (sum [i=2:col-1] valid(i)?column(i):0) + column(col)/2 ):( sprintf("%d%%", ceil( 100.0 * column(col) / (sum [i=2:8] valid(i)?column(i):0)) ) ) with labels notitle boxed
 
 
 ###############
