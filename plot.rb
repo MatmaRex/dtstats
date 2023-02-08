@@ -8,7 +8,10 @@ Dir.entries('out').each do |d|
 end
 
 
-html = ""
+html = '<h1>Usage stats for DiscussionTools and other methods of adding talk page comments</h1>
+<p><strong><a href="https://github.com/MatmaRex/dtstats/blob/master/README.md">Notes and caveats</a></strong></p>
+<p><a href="https://github.com/MatmaRex/dtstats">Source code</a></p>
+'
 
 html += '<ul style="position:fixed; top:0; right:0;">'
 html += files.map{|f|
