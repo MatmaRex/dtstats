@@ -4,7 +4,7 @@ files = []
 Dir.entries('out').sort.each do |d|
 	next if d == '.' || d == '..'
 	next if d =~ /raw/
-	`gnuplot -e INPUT='out/#{d}' -e OUTPUT='plot/#{d}.svg' plot.gnu`
+	`gnuplot -c plot.gnu out/#{d} plot/#{d}.svg`
 	files << d.sub('.tsv', '')
 end
 

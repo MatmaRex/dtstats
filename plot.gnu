@@ -25,19 +25,19 @@ set datafile separator tab
 
 ###############
 
-set output OUTPUT
+set output ARG2
 
 set datafile missing
 
 # in reverse order, fill the area below current column
-#plot for [col=8:2:-1] INPUT using 0:(column(col)>0 ? (sum [i=2:col] column(i)) : ""):xtic(1) title columnheader(col) with filledcurves x1
+#plot for [col=8:2:-1] ARG1 using 0:(column(col)>0 ? (sum [i=2:col] column(i)) : ""):xtic(1) title columnheader(col) with filledcurves x1
 # fill the area between stacked lines for current column and previous column
 set style textbox opaque noborder
 stackedlines(col) = sum [i=2:col] valid(i) ? column(i) : 0
 percent(col) = ceil( 100.0 * column(col) / stackedlines(8) )
 plot \
-	for [col=2:8] INPUT using 1:(stackedlines(col)):(stackedlines(col-1)):xtic(1) title columnheader(col)[0:15] with filledcurves, \
-	for [col=2:8] INPUT using 1:( stackedlines(col)/2 + stackedlines(col-1)/2 ):( floor(tm_mon(timecolumn(1))) % 6 != 3 ? "" : sprintf("%d%%", percent(col)) ) with labels notitle boxed
+	for [col=2:8] ARG1 using 1:(stackedlines(col)):(stackedlines(col-1)):xtic(1) title columnheader(col)[0:15] with filledcurves, \
+	for [col=2:8] ARG1 using 1:( stackedlines(col)/2 + stackedlines(col-1)/2 ):( floor(tm_mon(timecolumn(1))) % 6 != 3 ? "" : sprintf("%d%%", percent(col)) ) with labels notitle boxed
 
 
 ###############
