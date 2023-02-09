@@ -1,6 +1,7 @@
+#!/usr/bin/ruby
 files = []
 
-Dir.entries('out').each do |d|
+Dir.entries('out').sort.each do |d|
 	next if d == '.' || d == '..'
 	next if d =~ /raw/
 	`gnuplot -e INPUT='out/#{d}' -e OUTPUT='plot/#{d}.svg' plot.gnu`
