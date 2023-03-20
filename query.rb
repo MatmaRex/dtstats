@@ -1,6 +1,7 @@
 def get_sn db
-	data = File.read "C:/mediawiki/operations/mediawiki-config/wmf-config/config/#{db}.yaml"
-	data.split("\n").grep(/- s\d/)[0][/\d/]
+	data = File.readlines "C:/mediawiki/operations/mediawiki-config/wmf-config/db-production.php"
+	data = data.drop_while{|a| a !~ /sectionsByDB/ }.take_while{|a| a !~ /\]/ }
+	data.find{|a| a =~ /'#{db}'/ }[/'s(\d+)'/, 1] rescue '3'
 end
 
 def get_command db, file
